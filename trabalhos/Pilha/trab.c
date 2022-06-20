@@ -32,12 +32,11 @@ int procura(int vertice, int matriz[vertice][vertice], Stack *S,int ini, int fim
             else
                 continue;
         }if(matriz[i][j]!=0 && j == fim-1){
-            int soma=0;
+            int soma=matriz[i][j];
             //Desempilha tudo e retorna o valor
-            while (S->top!=-2)
+            while (desempilha(S,&i,&j))
             {
                 soma+=matriz[i][j];
-                desempilha(S,&i,&j);
             }
             return soma;
         }

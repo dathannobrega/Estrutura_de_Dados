@@ -6,9 +6,8 @@ typedef struct pair{
 }Pair;
 
 typedef struct stack {
-  int top;
-//   int vet[MAX][MAX];
-    Pair vet[MAX];
+    int top;
+    Pair *vet;
 }Stack;
 
 bool vazio(Stack *S){
@@ -49,7 +48,9 @@ bool empilhar(Stack *S,int i,int j){
 
 Stack* criar(){
     Stack *P;
+
     P = (Stack*)malloc(sizeof(Stack));
+    P->vet = (Pair*)malloc(MAX*sizeof(Pair));
     if(P!=NULL)
         P->top=-1;
     return P;
