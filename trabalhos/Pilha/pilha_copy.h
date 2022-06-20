@@ -1,14 +1,8 @@
 
-
-typedef struct pair{
-    int i;
-    int j;
-}Pair;
-
-typedef struct stack {
+typedef struct stack
+{
   int top;
-//   int vet[MAX][MAX];
-    Pair vet[MAX];
+  int vet[MAX];  
 }Stack;
 
 bool vazio(Stack *S){
@@ -26,32 +20,25 @@ bool cheio(Stack *S){
 }
 
 //retorna zero quando da erro
-bool desempilha(Stack *S, int *i, int *j){
-    if(vazio(S)){
-        return false;
-    }
-    else {
-        *i=S->vet[S->top].i;
-        *j=S->vet[S->top].j;
-        S->top = S->top-1;
-        return true;
-    }
+int desempilha(Stack *S){
+    if(vazio(S))
+        return 0;
+    S->top = S->top-1;
+    return S->vet[S->top+1];
 }
 
-bool empilhar(Stack *S,int i,int j){
+bool empilhar(Stack *S,int x){
     if(cheio(S))
         return false;
     S->top = S->top+1;
-    S->vet[S->top].i= i;
-    S->vet[S->top].j= j;
+    S->vet[S->top]=x;
     return true;
 }
 
 Stack* criar(){
     Stack *P;
     P = (Stack*)malloc(sizeof(Stack));
-    if(P!=NULL)
-        P->top=-1;
+    P->top=-1;
     return P;
 }
 
