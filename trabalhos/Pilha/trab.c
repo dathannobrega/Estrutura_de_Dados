@@ -100,7 +100,7 @@ int procura(int vertice, int matriz[vertice][vertice], Stack *S,int ini, int fim
             Caso 1 de parada: se o valor encontrado for igual a 0 e a coluna for a ultima
             Desempilha o topo da pilha, i e j recebem novos valores (do vertice anterior)
         */
-         if(matriz[i][j] == 0 && j == vertice-1){
+         if(matriz[i][j] == 0 && j >= vertice-1){
             deuCerto = pop(S, &i, &j);
             if(!deuCerto) return -1;
             else continue;
@@ -147,6 +147,6 @@ int main(){
     scanf("%d %d", &ini, &fim);
     valor = procura(vertice, matriz, S, ini, fim);
 
-    printf("%d", valor);
+    printf("%d\n", valor);
 
 }
