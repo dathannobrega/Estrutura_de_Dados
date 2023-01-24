@@ -47,7 +47,7 @@ void adicionaTermo(Hash *H,char *port,char *eng){
                     return;
                 }
                 i++;tam++;
-                bin = geraHash(H,port,i);
+                bin = geraHash(H,port,i); // gera um outro hash
             }
         }
             //printf("Alocado: %d ",(bin+i)%H->tam);
@@ -68,9 +68,23 @@ int geraHash(Hash *H,char *key,int num){ // funçao que gera o hash para alocar 
         hash += key[i];
         i++;
     }
-    int value = (1*num)+(3*num*num); // os coeficientes sao 1 e 3
+    int value = geraHash2(H,key, num); // chama uma segunda funçao hash
     return (hash +value) % H->tam; // é necessario passa ja com o resto da diferença
 }
+
+int geraHash2(Hash *H,char *key,int num){ // funçao que gera o hash para alocar os valores //gera um valor quadratico
+    unsigned long int hash =0;
+    int i =0;
+    
+    while (hash < ULONG_MAX && i < strlen(key))
+    {
+        hash= hash << 8;
+        hash += key[i];
+        i++;
+    }
+    return hash; // é necessario passa ja com o resto da diferença
+}
+
 
 
 char* procuraTermo(Hash *H,char *port){
