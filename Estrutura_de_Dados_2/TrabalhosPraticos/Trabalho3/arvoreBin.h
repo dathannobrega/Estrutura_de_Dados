@@ -1,20 +1,23 @@
-#ifndef ARVOREBIN_H_
-#define ARVOREBIN_H_
+#ifndef ARVOREBIN_H
+#define ARVOREBIN_H
+#define MAX 100
 
-typedef struct  arvoreBin{
-    char *data;
-    struct arvoreBin *esq;
-    struct arvoreBin *dir;
-}ArvoreBin;
+struct arv{
+    char palavra[MAX];
+    int nOcorrencia;
+    struct arv* esq;
+    struct arv* dir;
+};
 
+typedef struct arv Arv;
 
+int arv_vazia(Arv *arv);
+int maior(int m1, int m2);
+int altura(Arv *arv);
+int fator_Balanceamento(Arv *arv);
+Arv* insere_elem_arv(Arv* raiz, char *palavra);
+void imprime_arv_ordem(Arv* arv);
+int arv_busca(Arv* arv, char *palavra);
+void arv_pesquisa_frequencia(Arv* arv, int frequencia);
 
-ArvoreBin* criarBin(char *word);
-void insertBin(ArvoreBin *A,char *word); // funçao que inserer um elemnto na arvore
-void printBin(ArvoreBin *A); // funçao que printa toda a arvore
-void removeElem(ArvoreBin *A,char *word); // funçao que remove 1 elemento da arvore
-int searchBin(ArvoreBin *A,char *word); // funçao que procura um elemento na arvore
-void eraseBin(ArvoreBin *A); // funçao que apaga todos os elementos 
-
-
-#endif // arvorebin.h
+#endif

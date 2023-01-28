@@ -1,72 +1,85 @@
+#include <stdlib.h>
 #include <stdio.h>
-#include<stdlib.h>
 #include <string.h>
 #include "arvoreBin.h"
 
-
-
-
-
-ArvoreBin* criarBin(char *word){
-    ArvoreBin *A;
-    A = (ArvoreBin*)malloc(sizeof(ArvoreBin));
-    if(A!= NULL){
-        A->dir = NULL;
-        A->esq = NULL;
-        strcpy(A->data,word);
-    }
-
-    return A;
+int arv_vazia(Arv *arv){
+    if(arv==NULL)
+        return 1;
+    return 0;
 }
 
-void insertBin(ArvoreBin *A, char *word) {
-    ArvoreBin *NEW;
-    NEW = (ArvoreBin*)malloc(sizeof(ArvoreBin));
+int maior(int m1, int m2){
+    if(m1>m2)
+        return m1;
+    return m2;
+}
 
-    if(NEW == NULL)
-        return; // se nao conseguiu alocar ele retorna
+int altura(Arv *arv){
+    if(arv_vazia(arv))
+        return -1;
+    return maior(altura(arv->esq),altura(arv->dir))+1;
+}
 
-    strcpy(NEW->data,word);
-    NEW->dir = NULL;
-    NEW->esq = NULL;
+int fator_Balanceamento(Arv *arv){
+    return ((altura(arv->esq))-(altura(arv->dir)));
+}
 
-    ArvoreBin *aux,*ant;
-    int pos; // um marcador pra saber se adiciono na esquerda ou direita.
-    aux = A;
-
-    while (aux != NULL) // vai fazer esse while ate achar a posiçao nula
-    {
-        if(strcmp(word, aux->data > 0)){//>0 se o primeiro é maior(in ASCII)que o str 2,
-            ant = aux;
-            aux = aux->dir;
-            pos = 0;
-        }else {
-            ant = aux;
-            aux = aux->esq;
-            pos = 1;
+Arv* insere_elem_arv(Arv* raiz, char *palavra){
+    Arv* p;
+    if(arv_vazia(raiz)){
+        p=(Arv*)malloc(sizeof(Arv));
+        strcpy(p->palavra, palavra);
+        p->nOcorrencia=1;
+        p->esq=NULL;
+        p->dir=NULL;
+        return p;
+    }
+    else{
+        int i=strcmp(raiz->palavra,palavra);
+        if(i==0)
+            raiz->nOcorrencia++;
+        else{
+            if(i>0)
+                raiz->esq=insere_elem_arv(raiz->esq,palavra);
+            else    
+                raiz->dir=insere_elem_arv(raiz->dir,palavra);
         }
     }
-    
-    if(pos == 0){ // adicionar na direita
-        ant->dir = NEW;
-    } else {
-        ant->esq = NEW;
+    return raiz;
+}
+
+void imprime_arv_ordem(Arv* arv){
+    if(!arv_vazia(arv)){
+        imprime_arv_ordem(arv->esq);
+        printf("%s ---%d\n",arv->palavra,arv->nOcorrencia);
+        imprime_arv_ordem(arv->dir);
     }
 }
 
+int arv_busca(Arv* arv, char *palavra){
+    int i, ret=0;
 
-void printBin(ArvoreBin *A) {
-    if(A != NULL){
-        printBin(A->esq);
-        printf("%s ",A->data);
-        printBin(A->dir);
+    if(!arv_vazia(arv)){
+        int i=strcmp(arv->palavra,palavra);
+        if(i==0)
+            ret=arv->nOcorrencia;
+        else{
+            if(i>0)
+                ret=arv_busca(arv->esq,palavra);
+            else
+                ret=arv_busca(arv->dir,palavra);
+        }
+    }
+    return ret;
+}
+
+void arv_pesquisa_frequencia(Arv* arv, int frequencia){
+    if(!arv_vazia(arv)){
+        arv_pesquisa_frequencia(arv->esq,frequencia);
+        if(frequencia==arv->nOcorrencia)
+            printf("%s \n",arv->palavra);
+        
+        arv_pesquisa_frequencia(arv->dir, frequencia);
     }
 }
-
-
-char* removeElem(ArvoreBin *A,char *word) // funçao que remove 1 elemento da arvore
-{
-    
-}
-int searchBin(ArvoreBin *A,char *word); // funçao que procura um elemento na arvore
-void eraseBin(ArvoreBin *A); // funçao que apaga todos os elementos 
