@@ -4,7 +4,8 @@
 #include "vetorBin.h"
 
 Vetor* cria_vetor(){
-    Vetor *vet=(Vetor*)malloc(sizeof(Vetor));
+    Vetor *vet;
+    vet = (Vetor*)malloc(sizeof(Vetor));
     if(vet!=NULL)
         vet->fim=0;
 

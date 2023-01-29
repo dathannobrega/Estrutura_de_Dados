@@ -3,7 +3,7 @@
 #elif __linux__
     #define clean "clear"
 #endif
-//CORRIGIR LINHAS  29, 32, 55 E 100
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

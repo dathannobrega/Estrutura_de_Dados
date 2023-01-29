@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "vetorbin.h": "c"
+        "vetorbin.h": "c",
+        "stdio.h": "c"
     }
 }
